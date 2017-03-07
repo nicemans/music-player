@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+	#phone{
+		width:320px;
+		height:600px;
+		background:#000000;
+		margin:50px auto;
+		font-family:"微软雅黑";
+	}
+	.top{
+		width:320px;
+		height:23px;
+		background:url("images/1.png");
+	}
+	.title{
+		width:320px;
+		height:30px;
+		background:url("images/2.png");
+		color:#fff;
+		text-align:center;
+		font-size:19px;
+		font-weight:600;
+	}
+	.singer{
+		width:320px;
+		height:50px;
+		color:#fff;
+		text-align:center;
+		line-height:50px;
+	}
+	.play{
+		width:190px;
+		height:190px;
+		background:url("images/3.png");
+		margin:auto;
+		border-radius:50%;
+		cursor:pointer;
+	}
+	.lrc{
+		width:300px;
+		height:283px;
+		margin:auto;
+		/*border:1px solid red;*/
+		color:#ccc;
+		text-align:center;
+		font-size:14px;
+		overflow:hidden;
+		margin-top:10px;
+	}
+	.content{
+		position:relative;
+		top:0px;
+		width:100%;
+		height:100%;	
+	}
+	.content p{
+		line-height:15px;
+	}
+	.rotate{
+		animation: rot 10s linear infinite;/*自定义动画：动画名称 时间 匀速 无线重复*/
+	}
+	@keyframes rot{
+		from{transform:rotate(0deg)}
+		to{transform:rotate(360deg)}
+	}
+  </style>
+ </head>
+ <body>
+	<div id="phone">
+		<div class="top"></div>
+		<div class="title">光辉岁月</div>
+		<div class="singer">beyond</div>
+		<div class="play"></div>
+		<div class="lrc">
+			<div class="content">
+			
+			</div>
+		</div>
+	</div>
+	<audio id="music" src="music/Beyond-光辉岁月.mp3"></audio>
+	<textarea id="text" style="display:none">
+		[00:02.01]光辉岁月 - Beyond
+		[00:28.96]钟声响起归家的讯号
+		[00:33.28]在他生命里仿佛带点唏嘘
+		[00:41.96]黑色肌肤给他的意义
+		[00:46.44]是一生奉献肤色斗争中
+		[00:55.05]年月把拥有变做逝去
+		[01:01.41]疲倦的双眼带着期望
+		[01:07.88]今天只有残留的躯壳
+		[01:11.50]迎接光辉岁月
+		[01:14.71]风雨中抱紧自由
+		[01:20.84]一生经过彷徨的挣扎
+		[01:24.49]自信可改变未来
+		[01:27.73]问谁又能做到
+		[01:43.51]可否不分肤色的界限
+		[01:47.96]在这土地里 不分你我高低
+		[01:56.55]缤纷色彩显出的美丽
+		[02:00.97]是因它没有分开每种色彩
+		[02:09.45]年月把拥有变做失去
+		[02:15.77]疲倦的双眼带着期望
+		[02:22.43]今天只有残留的躯壳 
+		[02:26.02]迎接光辉岁月
+		[02:29.34]风雨中抱紧自由
+		[02:35.16]一生经过彷徨的挣扎
+		[02:39.05]自信可改变未来
+		[02:42.25]问谁又能做到
+		[03:23.99]今天只有残留的躯壳 
+		[03:27.65]迎接光辉岁月
+		[03:30.86]风雨中抱紧自由
+		[03:36.83]一生经过彷徨的挣扎
+		[03:40.60]自信可改变未来
+		[03:43.90]问谁又能做到
+		[03:59.69]今天只有残留的躯壳 
+		[04:03.21]迎接光辉岁月
+		[04:06.60]风雨中抱紧自由
+		[04:12.67]一生经过彷徨的挣扎
+		[04:16.24]自信可改变未来
+		[04:19.56]问谁又能做到
+		[04:35.31]今天只有残留的躯壳 
+		[04:38.89]迎接光辉岁月
+		[04:42.11]风雨中抱紧自由
+		[04:48.10]一生经过彷徨的挣扎
+		[04:52.02]自信可改变未来
+	</textarea>
+
+	<script type="text/javascript">
+		var oBtn = document.getElementsByClassName("play")[0]; 
+		var myMusic=document.getElementById("music");
+		var text=document.getElementById("text") 
+		var oLrc=document.getElementsByClassName("content")[0];
+		var mark=true;
+		oBtn.onclick=function(){
+			if(mark){
+				myMusic.play();	
+				this.className="play rotate";
+				mark=false;
+			}else{
+				myMusic.pause();
+				this.className="play";
+				mark=true;
+			}
+		}
+		var txt=text.value;
+		//console.log(text);
+		var lrc=txt.split("["); 
+		//console.log(lrc);
+		var html='';
+		for(var i=0;i<lrc.length;i++){
+			//去除歌词里面[把时间和文本彻底分开
+			var arr=lrc[i].split("]");
+			//console.log(arr[0])
+				var time=arr[0].split(".");
+				var timer=time[0].split(":");
+				var sec=timer[0]*60+timer[1]*1;
+				//console.log(sec);
+			//用p标签来存储每一句 歌词文本 
+			if(arr[1]){
+				html+="<p id="+sec+">"+arr[1]+"</p>"
+			}
+		//console.log(html);
+		//把所有的p标签添加到储存歌词的盒子里面
+		}
+		oLrc.innerHTML=html;
+		var oP=document.getElementsByTagName("p");
+		//监听音乐播放进度
+		var num=0;
+		myMusic.addEventListener("timeupdate",function(){
+			//获取音乐播放的当前时间
+			var currTime=parseInt(this.currentTime);
+			//console.log(num);
+			if (document.getElementById(currTime))
+			{
+				//先把所有的p标签的颜色改为原来的，然后再把当前的变色
+				for (var i=0;i<oP.length ;i++ )
+				{
+					oP[i].style.cssText="color:#ccc;font-size:14px;";
+				}
+				document.getElementById(currTime).style.cssText="color:red;font-size:18px;";
+				if(oP[num+3].id==currTime){
+					oLrc.style.top=-20*num+"px";
+					num++;
+				}
+			}
+		});
+	</script>
+ </body>
+</html>
